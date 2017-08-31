@@ -1,2 +1,4 @@
 django==1.11
 psycopg2==2.7.3
+celery[redis]
+django_redis
