@@ -37,7 +37,7 @@ class FeedsApiUrl(models.QuerySet):
     api_url = models.TextField(null=True)
     description = models.TextField(null=True)
     time = models.ForeignKey(TimeStampedModel,on_delete=models.CASCADE,related_name='time_stamp',db_index=True)
-    is_emove = models.BooleanField(default=False)
+    is_remove = models.BooleanField(default=False)
     def published(self):
         return self.filter(publish=True)
 
