@@ -20,7 +20,7 @@ class Author(models.Model):
                                help_text="Upload your photo for Avatar")
     about = models.TextField()
     website = models.URLField(max_length=200, blank=True, null=True)
-    isRemove = models.BooleanField(default=False)
+    is_remove = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -28,34 +28,16 @@ class Author(models.Model):
     def get_absolute_url(self):
         return reverse('author_posts_page',
                        kwargs={'username': self.user.username})
-
+    
     class Meta:
         verbose_name = 'Detail Author'
         verbose_name_plural = 'Authors'
-
-
-class Tag(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
-    isRemove = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.title
-
-    @property
-    def get_total_posts(self):
-        return Feeds.objects.filter(tags__pk=self.pk).count()
-
-    class Meta:
-        verbose_name = 'Detail Tag'
-        verbose_name_plural = 'Tags'
-
 
 class FeedsApiUrl(models.QuerySet):
     api_url = models.TextField(null=True)
     description = models.TextField(null=True)
     time = models.ForeignKey(TimeStampedModel,on_delete=models.CASCADE,related_name='time_stamp',db_index=True)
-    isRemove = models.BooleanField(default=False)
+    is_emove = models.BooleanField(default=False)
     def published(self):
         return self.filter(publish=True)
 
@@ -76,7 +58,7 @@ class Feeds(TimeStampedModel):
 
     publish = models.BooleanField(default=True)
     objects = FeedsApiUrl.as_manager()
-    isRemove = models.BooleanField(default=False)
+    is_remove = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('detail_post_page', kwargs={'slug': self.slug})
@@ -100,7 +82,7 @@ class Page(TimeStampedModel):
     slug = models.SlugField(max_length=200, unique=True)
     description = RedactorField()
     publish = models.BooleanField(default=True)
-    isRemove = models.BooleanField(default=False)
+    is_remove = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -118,7 +100,7 @@ class Page(TimeStampedModel):
 class Gallery(TimeStampedModel):
     title = models.CharField(max_length=200)
     attachment = models.FileField(upload_to='gallery/attachment/%Y/%m/%d')
-    isRemove = models.BooleanField(default=False)
+    is_remove = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -134,18 +116,4 @@ class Gallery(TimeStampedModel):
     class Meta:
         verbose_name = 'Detail Gallery'
         verbose_name_plural = 'Galleries'
-        ordering = ['-created']
-
-
-class Visitor(TimeStampedModel):
-    post = models.ForeignKey(Post, related_name='post_visitor')
-    ip = models.CharField(max_length=40)
-    isRemove = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.post.title
-
-    class Meta:
-        verbose_name = 'Detail Visitor'
-        verbose_name_plural = 'Visitors'
         ordering = ['-created']
