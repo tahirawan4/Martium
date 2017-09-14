@@ -117,3 +117,4 @@
 #         verbose_name = 'Detail Gallery'
 #         verbose_name_plural = 'Galleries'
 #         ordering = ['-created']
+

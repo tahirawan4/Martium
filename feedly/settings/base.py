@@ -36,6 +36,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'parser',
 ]
 
 PROJECT_APPS = ['parser']
