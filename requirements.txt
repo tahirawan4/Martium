@@ -3,3 +3,4 @@ psycopg2==2.7.3
 celery
 redis
 django_redis
+requests
