@@ -15,9 +15,3 @@ app.conf.task_default_queue = 'default'
 
 app.autodiscover_tasks()
 
-# app.conf.beat_schedule = {
-#     "test_task": {
-#         "task": "test_task",
-#         'schedule': crontab(minute='*/10'),
-#     },
-# }
