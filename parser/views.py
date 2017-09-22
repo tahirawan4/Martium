@@ -7,7 +7,7 @@ from parser.utils import feed_parser
 from parser import feeds_dictionary
 from parser.models import Feed
 from django.core.paginator import Paginator
-
+from parser.tasks import feed_importer
 
 
 def index(request):
@@ -37,3 +37,9 @@ def get_feeds(request):
         feeds_list.append(feeds_dictionary(feeds))
 
     return JsonResponse(json.dumps(feeds_list), safe=False)
+
+
+def start_task(request):
+    stream_id = request.GET.get('stream_id')
+    result = feed_importer.delay(stream_id)
+    return JsonResponse({'success':True}, safe=False)
