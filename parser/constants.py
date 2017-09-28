@@ -13,3 +13,9 @@ FEEDLY_API_URL_IDS = 'http://sandbox7.feedly.com/v3/streams/ids?streamId=feed%2F
 # get specific strem entry
 
 STREAM_ENTRY = 'https://sandbox7.feedly.com/v3/entries/%s'  # replace %s with stream id got from FEEDLY_API_URL_IDS and don't forget to do url encode on id
+
+
+TEXT_RAZOR_API_KEY = "19b2a0d33d1a30626a7385cefbecf373fe6209074dc1df7d992a6ed8"
+
+
+
