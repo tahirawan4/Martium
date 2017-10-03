@@ -6,7 +6,6 @@ from parser.constants import FEEDLY_API_URL, FEEDLY_GET_CATEGORIES_URL, DEV_TOKE
 from parser.utils import feed_parser
 from parser import feeds_dictionary
 from parser.models import Feed
-from django.core.paginator import Paginator
 from parser.tasks import feed_importer
 
 
