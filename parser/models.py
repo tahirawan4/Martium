@@ -7,7 +7,7 @@ class Author(models.Model):
     is_hidden = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'self.title'
+        return self.title
 
 
 class Stream(models.Model):
@@ -16,7 +16,7 @@ class Stream(models.Model):
     is_hidden = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.stream_id}'
+        return self.stream_id
 
 
 class Keyword(models.Model):
@@ -24,7 +24,7 @@ class Keyword(models.Model):
     is_hidden = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.keyword}'
+        return self.keyword
 
 
 class Feed(models.Model):
@@ -42,4 +42,4 @@ class Feed(models.Model):
     author = models.ForeignKey(Author, null=True)
 
     def __str__(self):
-        return f'{self.feed_id}'
+        return self.feed_id
