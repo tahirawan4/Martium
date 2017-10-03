@@ -14,7 +14,8 @@ app = Celery('tasks', broker='redis://localhost')
 
 @app.task(name="feeds_importer")
 def feed_importer(stream_id):
-    feed_url = FEEDLY_API_URL_CELERY % stream_id
+    # TODO: Update it according the stream id
+    feed_url = FEEDLY_API_URL_CELERY
     feed_response_data = requests.get(feed_url)
     data = json.loads(feed_response_data.text)
     for feed in data['items']:

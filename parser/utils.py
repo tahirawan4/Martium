@@ -16,3 +16,20 @@ def feed_parser(feeds):
         })
 
     return feeds_data
+
+
+def feeds_dictionary(feed):
+    dictionary = {
+        "title": feed.title,
+        "feed_id": feed.feed_id,
+        "keywords": list(feed.keywords.all().values_list('keyword', flat=True)),
+        "stream": feed.stream,
+        "origin_url": feed.origin_url,
+        "published_at": str(feed.published_at),
+        "updated_at": str(feed.updated_at),
+        "summary": feed.summary,
+        "engagement": feed.engagement,
+        "is_hidden": feed.is_hidden,
+        "author": feed.author.title if feed.author else ''
+    }
+    return dictionary

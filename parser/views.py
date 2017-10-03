@@ -2,9 +2,8 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import json
 import requests
-from parser.constants import FEEDLY_API_URL, FEEDLY_GET_CATEGORIES_URL, DEV_TOKEN, FEEDLY_API_URL_IDS
-from parser.utils import feed_parser
-from parser import feeds_dictionary
+from parser.constants import FEEDLY_API_URL, FEEDLY_GET_CATEGORIES_URL, DEV_TOKEN, FEEDLY_API_URL_IDS, STREAM_ID
+from parser.utils import feed_parser, feeds_dictionary
 from parser.models import Feed
 from parser.tasks import feed_importer
 
@@ -28,17 +27,17 @@ def get_categories(request):
 
 
 def get_feeds(request):
-    limit = request.GET.get('limit')if 'limit' in request.GET else 10
+    limit = request.GET.get('limit') if 'limit' in request.GET else 10
     feeds_list = []
     feeds_obj = Feed.objects.filter(is_hidden=False)[0:int(limit)]
 
     for feeds in feeds_obj:
         feeds_list.append(feeds_dictionary(feeds))
-
-    return JsonResponse(json.dumps(feeds_list), safe=False)
+    return HttpResponse(json.dumps(feeds_list), content_type="application/json")
 
 
 def start_task(request):
+    #TODO: Need to update according to a celery task
     stream_id = request.GET.get('stream_id')
-    result = feed_importer.delay(stream_id)
-    return JsonResponse({'success':True}, safe=False)
+    result = feed_importer(STREAM_ID)
+    return JsonResponse({'success': True}, safe=False)
