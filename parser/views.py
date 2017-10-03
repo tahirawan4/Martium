@@ -37,7 +37,7 @@ def get_feeds(request):
 
 
 def start_task(request):
-    #TODO: Need to update according to a celery task
+    # TODO: Need to update according to a celery task
     stream_id = request.GET.get('stream_id')
     result = feed_importer(STREAM_ID)
     return JsonResponse({'success': True}, safe=False)
