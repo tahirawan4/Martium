@@ -40,6 +40,7 @@ class Feed(models.Model):
     engagement_rate = models.FloatField(default=0.0)
     is_hidden = models.BooleanField(default=False)
     author = models.ForeignKey(Author, null=True)
+    image = models.URLField(null=True, blank=True, default='')
 
     def __str__(self):
         return self.feed_id

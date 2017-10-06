@@ -36,4 +36,5 @@ def feed_importer(stream_id):
             for keyword in feed.get('keywords', []):
                 keyword, _ = Keyword.objects.get_or_create(keyword=keyword.lower())
                 feed_object.keywords.add(keyword)
+            feed_object.image = feed.get('visual', {}).get('url', '') if feed.get('visual', '') else '',
             feed_object.save()
