@@ -5,3 +5,4 @@ redis
 django_redis
 requests
 django-cors-headers
+circus
