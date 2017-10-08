@@ -5,7 +5,7 @@ import requests
 from parser.constants import FEEDLY_API_URL, FEEDLY_GET_CATEGORIES_URL, DEV_TOKEN, FEEDLY_API_URL_IDS, STREAM_ID
 from parser.utils import feed_parser, feeds_dictionary
 from parser.models import Feed
-from parser.tasks import feed_importer
+from .tasks import feed_importer
 
 
 def index(request):
@@ -39,5 +39,5 @@ def get_feeds(request):
 def start_task(request):
     # TODO: Need to update according to a celery task
     stream_id = request.GET.get('stream_id')
-    result = feed_importer(STREAM_ID)
+    result = feed_importer.delay(STREAM_ID)
     return JsonResponse({'success': True}, safe=False)
