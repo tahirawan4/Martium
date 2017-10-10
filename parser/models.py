@@ -20,7 +20,7 @@ class Stream(models.Model):
 
 
 class Keyword(models.Model):
-    keyword = models.CharField(max_length=200)
+    keyword = models.CharField(max_length=200, unique=True)
     is_hidden = models.BooleanField(default=False)
 
     def __str__(self):
@@ -29,7 +29,7 @@ class Keyword(models.Model):
 
 class Feed(models.Model):
     title = models.CharField(max_length=200, null=True)
-    feed_id = models.CharField(max_length=200)
+    feed_id = models.CharField(max_length=200, unique=True)
     keywords = models.ManyToManyField(Keyword, null=True, blank=True)
     stream = models.ForeignKey(Stream, null=True)
     origin_url = models.CharField(max_length=500, null=True)
