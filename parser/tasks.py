@@ -2,18 +2,30 @@ import json
 import requests
 from psycopg2._psycopg import IntegrityError
 
-from parser.constants import FEEDLY_API_URL_CELERY
+from parser.constants import FEEDLY_API_URL_CELERY, FEEDLY_ACCOUNT_TOKEN, FEEDLY_PRODUCTION_URL
 from parser.models import Feed, Author, Keyword
 from datetime import datetime
 import datetime
 from feedly.celery import app
 
 
+def get_feed_content(streamId='feed/http://www.cnbc.com/id/10000115/device/rss/rss.html'):
+    headers = {'Authorization': 'OAuth ' + FEEDLY_ACCOUNT_TOKEN}
+    quest_url = "https://%s" % (FEEDLY_PRODUCTION_URL)
+    quest_url += "/%s" % 'v3/streams/contents'
+    params = dict(
+        streamId=streamId,
+        count=100
+    )
+    res = requests.get(url=quest_url, params=params, headers=headers)
+    return res.json()
+
+
 @app.task
 def feed_importer(stream_id):
-    feed_url = FEEDLY_API_URL_CELERY
-    feed_response_data = requests.get(feed_url)
-    data = json.loads(feed_response_data.text)
+    # feed_url = FEEDLY_API_URL_CELERY
+    data = get_feed_content()  # requests.get(feed_url)
+    # data = json.loads(feed_response_data.text)
     for feed in data['items']:
         try:
             published_at = datetime.datetime.fromtimestamp(feed.get('published') / 1e3)

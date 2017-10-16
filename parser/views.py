@@ -27,9 +27,9 @@ def get_categories(request):
 
 
 def get_feeds(request):
-    limit = request.GET.get('limit') if 'limit' in request.GET else 10
+    limit = request.GET.get('limit') if 'limit' in request.GET else 30
     feeds_list = []
-    feeds_obj = Feed.objects.filter(is_hidden=False)[0:int(limit)]
+    feeds_obj = Feed.objects.filter(is_hidden=False).order_by('-id')[0:int(limit)]
 
     for feeds in feeds_obj:
         feeds_list.append(feeds_dictionary(feeds))
